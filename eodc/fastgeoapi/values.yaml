@@ -1,0 +1,45 @@
+image:
+  repository: registry.eodc.eu/eodc/eodc-api/fastgeoapi
+  tag: "0.4.0"
+  pullPolicy: IfNotPresent
+imagePullSecrets: []
+
+replicas: 1
+workers: 4
+contextPath: /geoapi
+baseUrl: https://fastgeoapi.example.eodc.eu
+logLevel: error
+
+postgres:
+  secretName: postgres-credentials
+  secretKey: postgresPassword
+
+auth:
+  opaEnabled: false
+  jwksEnabled: false
+  apiKeyEnabled: false
+
+extraEnv: {}
+
+config:
+  data: ""
+
+service:
+  port: 80
+
+ingress:
+  enabled: false
+  className: ""
+  host: fastgeoapi.example.eodc.eu
+  annotations: {}
+  tls: []
+
+resources: {}
+
+httpRoute:
+  enabled: true
+  hostnames:
+    - fastgeoapi.example.eodc.eu
+  pathPrefix: /
+  parentRefs: []
+  annotations: {}
