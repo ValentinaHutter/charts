@@ -23,3 +23,16 @@ httpRoute:
   parentRefs: []
 
 resources: {}
+
+# Authorisation with OPA (fastgeoapi's built-in OPA mode, OPA as sidecar)
+opa:
+  enabled: false
+  image: openpolicyagent/opa:1.22.0
+  collectionGroups: {}
+  publicPaths: []
+
+# Keycloak client used by fastgeoapi in OPA mode
+oidc:
+  wellKnownEndpoint: ""
+  clientId: ""
+  clientSecretName: ""
