@@ -39,7 +39,7 @@ spec:
             - { name: PYGEOAPI_OPENAPI, value: /tmp/pygeoapi-openapi.yml }
             - { name: DEV_PYGEOAPI_CONFIG, value: /config/pygeoapi-config.yml }
             - { name: DEV_PYGEOAPI_OPENAPI, value: /tmp/pygeoapi-openapi.yml }
-            - { name: DEV_PYGEOAPI_BASEURL, value: {{ .Values.baseUrl | quote }} }
+            - { name: DEV_PYGEOAPI_BASEURL, value: {{ required "baseUrl is required" .Values.baseUrl | quote }} }
             - { name: DEV_FASTGEOAPI_CONTEXT, value: {{ .Values.contextPath | quote }} }
             - { name: DEV_ROOT_PATH, value: "" }
             - { name: DEV_LOG_PATH, value: /tmp }
@@ -48,17 +48,14 @@ spec:
             - { name: DEV_LOG_ENQUEUE, value: "true" }
             - { name: DEV_LOG_ROTATION, value: "1 days" }
             - { name: DEV_LOG_RETENTION, value: "1 weeks" }
-            - { name: DEV_OPA_ENABLED, value: {{ .Values.auth.opaEnabled | quote }} }
-            - { name: DEV_JWKS_ENABLED, value: {{ .Values.auth.jwksEnabled | quote }} }
-            - { name: DEV_API_KEY_ENABLED, value: {{ .Values.auth.apiKeyEnabled | quote }} }
+            - { name: DEV_OPA_ENABLED, value: "false" }
+            - { name: DEV_JWKS_ENABLED, value: "false" }
+            - { name: DEV_API_KEY_ENABLED, value: "false" }
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.postgres.secretName }}
                   key: {{ .Values.postgres.secretKey }}
-            {{- range $k, $v := .Values.extraEnv }}
-            - { name: {{ $k }}, value: {{ $v | quote }} }
-            {{- end }}
           volumeMounts:
             - name: config
               mountPath: /config
